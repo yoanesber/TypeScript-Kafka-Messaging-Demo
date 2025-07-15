@@ -1,14 +1,14 @@
 # Variables for the application container
-APP_CONTAINER_IMAGE=my-node-kafka-messaging-app
-APP_CONTAINER_NAME=node-kafka-messaging-app
+APP_CONTAINER_IMAGE=my-kafka-messaging-app
+APP_CONTAINER_NAME=kafka-messaging-app
 APP_DOCKER_CONTEXT=.
 APP_DOCKERFILE=./docker/app/Dockerfile
 APP_ENV_FILE=.env
 APP_PORT=4000
 
 # Variables for the PostgreSQL container
-POSTGRES_CONTAINER_IMAGE=my-node-kafka-messaging-postgres
-POSTGRES_CONTAINER_NAME=node-kafka-messaging-postgres
+POSTGRES_CONTAINER_IMAGE=my-postgres-server
+POSTGRES_CONTAINER_NAME=postgres-server
 POSTGRES_DOCKER_CONTEXT=./docker/postgres
 POSTGRES_DOCKERFILE=./docker/postgres/Dockerfile
 POSTGRES_PORT=5432

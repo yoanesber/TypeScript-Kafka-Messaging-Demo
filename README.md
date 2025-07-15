@@ -1,4 +1,4 @@
-# Message Processor Service (Node.js + TypeScript + KafkaJS)
+# Message Processor Service
 
 A scalable message processing microservice built with **Node.js**, **TypeScript**, **Express**, **KafkaJS**, and **PostgreSQL** (via **Sequelize**).  
 
@@ -142,7 +142,7 @@ This project utilizes a modern **Node.js-based** stack to implement a scalable K
 The project follows a modular and layered folder structure for maintainability, scalability, and separation of concerns. Below is a high-level overview of the folder architecture:
 
 ```
-📁node-kafka-messaging-demo/
+📁typescript-kafka-messaging-demo/
 ├── 📁docker/
 │   ├── 📁app/                # Dockerfile and setup for Node.js app container
 │   └── 📁postgres/           # PostgreSQL Docker setup with init scripts or volumes
@@ -435,8 +435,8 @@ make docker-down
 
 - **Notes**:  
   - Before running the application inside Docker, make sure to update your environment variables `.env`
-    - Change `DB_HOST=localhost` to `DB_HOST=node-kafka-messaging-postgres`.
-    - Change `KAFKA_HOST=localhost` to `KAFKA_HOST=node-kafka-server`.
+    - Change `DB_HOST=localhost` to `DB_HOST=postgres-server`.
+    - Change `KAFKA_HOST=localhost` to `KAFKA_HOST=kafka-server`.
 
 ### 🟢 Application is Running
 
