@@ -1,10 +1,6 @@
 # Message Processor Service
 
-A scalable message processing microservice built with **Node.js**, **TypeScript**, **Express**, **KafkaJS**, and **PostgreSQL** (via **Sequelize**).  
-
-This service provides RESTful APIs to POST bulk messages and GET message history, and processes incoming Kafka messages efficiently using KafkaJS's `eachBatch` method for precise control and reliability.
-
-This project is designed to handle high-throughput message processing with idempotency guarantees, ensuring that messages are processed exactly once, even in the face of retries or failures.
+A scalable **TypeScript-based** message processing microservice using **Express**, **KafkaJS**, and **PostgreSQL (Sequelize)**. It provides RESTful APIs for posting bulk messages and retrieving message history, and consumes Kafka messages efficiently with `eachBatch`, ensuring high-throughput and idempotent processing—even during retries or failures.
 
 ## ✨ Features
 
