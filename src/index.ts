@@ -12,7 +12,7 @@ try {
     KafkaProducerConfig.connect();
 } catch (error) {
     logger.error(`Error initializing Kafka Producer: ${error}`);
-    process.exit(1); // Exit if producer fails to initialize
+    process.exit(1); // Exit with error
 }
 
 // Connect to the Kafka consumer
@@ -20,7 +20,7 @@ try {
     KafkaConsumerConfig.connect();
 } catch (error) {
     logger.error(`Error initializing Kafka Consumer: ${error}`);
-    process.exit(1); // Exit if consumer fails to initialize
+    process.exit(1); // Exit with error
 }
 
 // Connect to the database
@@ -29,7 +29,7 @@ try {
     logger.info("Database connected successfully");
 } catch (error) {
     logger.error(`Error connecting to the database: ${error}`);
-    process.exit(1); // Exit if database connection fails
+    process.exit(1); // Exit with error
 }
 
 // Start the Kafka consumer
@@ -38,7 +38,7 @@ try {
     logger.info("Kafka Batch Message Consumer started successfully");
 } catch (error) {
     logger.error(`Error starting Kafka Batch Message Consumer: ${error}`);
-    process.exit(1); // Exit if consumer fails to start
+    process.exit(1); // Exit with error
 }
 
 // Start the Express server
@@ -77,39 +77,39 @@ if (process.platform === "win32") {
 
 // Graceful shutdown
 const shutdown = async () => {
-    console.log("\nShutting down gracefully...");
+    logger.info("\nShutting down gracefully...");
 
     try {
         // 1. Close database connection
         if (await DatabaseConfig.isConnected()) {
             await DatabaseConfig.disconnect();
-            console.log("Database connection closed");
+            logger.info("Database connection closed");
         }
 
         // 2. Close Kafka connections
         if (await KafkaProducerConfig.isConnected()) {
             await KafkaProducerConfig.disconnect();
-            console.log("Kafka connections closed");
+            logger.info("Kafka connections closed");
         }
         if (await KafkaConsumerConfig.isConnected()) {
             await KafkaConsumerConfig.disconnect();
-            console.log("Kafka Consumer disconnected");
+            logger.info("Kafka Consumer disconnected");
         }
         
         // 3. Close server
         server.close(() => {
-            console.log("Server closed");
-            process.exit(0);
+            logger.info("Server closed");
+            process.exit(0); // Exit with success
         });
 
         // 4. Handle any remaining requests
         setTimeout(() => {
-            console.error("Forcing shutdown after timeout");
-            process.exit(1);
+            logger.error("Forcing shutdown after timeout");
+            process.exit(1); // Exit with error
         }, 5000); // 5 seconds timeout
     } catch (err) {
-        console.error("Error closing server:", err);
-        process.exit(1);
+        logger.error("Error closing server:", err);
+        process.exit(1); // Exit with error
     }
 };
 

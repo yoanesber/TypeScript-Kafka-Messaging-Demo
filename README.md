@@ -159,7 +159,7 @@ The project follows a modular and layered folder structure for maintainability, 
 │   ├── 📁routes/             # API route definitions and registration
 │   ├── 📁services/           # Business logic and service layer between controllers and models
 │   └── 📁utils/              # Utility functions (e.g., logger)
-├── .env                    # Environment variables for configuration (DB credentials, Redis, Idempotency settings)
+├── .env                    # Environment variables for configuration (DB credentials, Kafka settings, app settings)
 ├── .sequelizerc            # Sequelize CLI configuration
 ├── entrypoint.sh           # Script executed at container startup (wait-for-db, run migrations, start app)
 ├── package.json            # Node.js project metadata and scripts
@@ -198,7 +198,7 @@ cd TypeScript-Kafka-Messaging-Demo
 
 ### ⚙️ Configure `.env` File  
 
-Set up your **database** and **Redis** configurations by creating a `.env` file in the project root directory:
+Set up your **database** and **kafka** configurations by creating a `.env` file in the project root directory:
 
 ```properties
 # Application Configuration
@@ -401,7 +401,7 @@ make install
 
 ### 🔧 Run Locally (Non-containerized)
 
-Ensure PostgreSQL and Redis are running locally, then:
+Ensure PostgreSQL and Kafka are running locally, then:
 
 ```bash
 make dev
@@ -421,7 +421,7 @@ This will apply all pending migrations to your PostgreSQL database.
 
 ### 🐳 Run Using Docker
 
-To build and run all services (PostgreSQL, Redis, and NodeJs app):
+To build and run all services (PostgreSQL, Kafka, and TypeScript app):
 
 ```bash
 make docker-up
