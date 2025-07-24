@@ -1,8 +1,13 @@
 import 'dotenv/config';
 import { Kafka, logLevel, LogEntry, Producer, Consumer, ProducerRecord, CompressionTypes, Transaction, KafkaJSNumberOfRetriesExceeded, RecordMetadata } from 'kafkajs';
 
-import logger from "../utils/logger.util";
+import Logger from "../utils/logger.util";
 
+/**
+ * Kafka configuration class.
+ * This class handles the configuration and creation of Kafka producers and consumers.
+ * It allows for custom logging, connection management, and transaction handling.
+ */
 class KafkaConfig {
     private kafka: Kafka;
     
@@ -22,14 +27,12 @@ class KafkaConfig {
     private kafkaLogCreator = () => (logEntry: LogEntry) => {
         const { namespace, level, label, log } = logEntry;
 
-        logger.debug(`>>>>> [${namespace}] ${label}: ${log.message}`, log);
-
         if (namespace === 'Consumer') {
-            logger.info(`[${namespace}] ${label}: ${log.message}`, log);
+            Logger.info(`[${namespace}] ${label}: ${log.message}`, log);
         }
 
         if (level === logLevel.ERROR) {
-            logger.error(`[${namespace}] ${label}: ${log.message}`, log);
+            Logger.error(`[${namespace}] ${label}: ${log.message}`, log);
         }
     };
 
@@ -94,9 +97,9 @@ class KafkaProducerConfig extends KafkaConfig {
         try {
             await this.producer.connect();
             this.connected = true;
-            logger.info('Kafka Producer connected successfully');
+            Logger.info('Kafka Producer connected successfully');
         } catch (error) {
-            logger.error('Error connecting Kafka Producer:', error);
+            Logger.error('Error connecting Kafka Producer:', error);
             this.connected = false;
             throw error; // Rethrow to handle it in the caller
         }
@@ -107,9 +110,9 @@ class KafkaProducerConfig extends KafkaConfig {
             await this.producer.disconnect();
             this.connected = false;
             this.producer = {} as Producer; // Reset the producer instance
-            logger.info('Kafka Producer disconnected successfully');
+            Logger.info('Kafka Producer disconnected successfully');
         } catch (error) {
-            logger.error('Error disconnecting Kafka Producer:', error);
+            Logger.error('Error disconnecting Kafka Producer:', error);
         }
     }
 
@@ -202,9 +205,9 @@ class KafkaConsumerConfig extends KafkaConfig {
         try {
             await this.consumer.connect();
             this.connected = true;
-            logger.info('Kafka Consumer connected successfully');
+            Logger.info('Kafka Consumer connected successfully');
         } catch (error) {
-            logger.error('Error connecting Kafka Consumer:', error);
+            Logger.error('Error connecting Kafka Consumer:', error);
             this.connected = false;
             throw error; // Rethrow to handle it in the caller
         }
@@ -215,9 +218,9 @@ class KafkaConsumerConfig extends KafkaConfig {
             await this.consumer.disconnect();
             this.connected = false;
             this.consumer = {} as Consumer; // Reset the consumer instance
-            logger.info('Kafka Consumer disconnected successfully');
+            Logger.info('Kafka Consumer disconnected successfully');
         } catch (error) {
-            logger.error('Error disconnecting Kafka Consumer:', error);
+            Logger.error('Error disconnecting Kafka Consumer:', error);
         }
     }
 

@@ -7,6 +7,11 @@ import MessageResponse from "../dtos/message-response.dto";
 import MessageService from "../services/message.service";
 import { MessageRequestSchema } from "../dtos/message-request.dto";
 
+/**
+ * MessageController handles the message-related operations.
+ * It includes methods for posting a single message, posting bulk messages,
+ * retrieving all messages, and getting a message by ID.
+ */
 class MessageController {
     async postMessage(req: Request, res: Response): Promise<void> {
         // Validate the request body against the MessageRequestSchema

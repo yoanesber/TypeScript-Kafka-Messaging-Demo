@@ -5,6 +5,12 @@ import MessageController from '../controllers/message.controller';
 import Validate from '../middlewares/validator.middleware';
 import { MessageRequestSchema } from "../dtos/message-request.dto";
 
+/**
+ * Message routes for handling message-related operations.
+ * This includes posting a single message, posting bulk messages,
+ * retrieving all messages, and getting a message by ID.
+ */
+
 const router = Router();
 
 router.post('', Validate(MessageRequestSchema), CatchAsync(MessageController.postMessage));

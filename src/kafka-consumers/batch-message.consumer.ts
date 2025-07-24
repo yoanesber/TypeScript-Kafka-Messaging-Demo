@@ -1,10 +1,15 @@
 import "dotenv/config";
 import { EachBatchPayload } from 'kafkajs';
 
-import logger from "../utils/logger.util";
+import Logger from "../utils/logger.util";
 import { kafkaConsumerConfig as KafkaConsumerConfig } from "../config/kafka.config";
 import { Message } from "../models/message.model";
 
+
+/**
+ * KafkaBatchMessageConsumer handles the consumption of messages from a Kafka topic in batches.
+ * It processes each message, updates its status in the database, and commits offsets.
+ */
 class KafkaBatchMessageConsumer {
     private message_topic: string;
 
@@ -17,7 +22,7 @@ class KafkaBatchMessageConsumer {
             // Start consuming messages
             await this.batchMessageConsumer();
         } catch (error) {
-            logger.error(`Error starting Kafka Batch Message Consumer: ${error}`);
+            Logger.error(`Error starting Kafka Batch Message Consumer: ${error}`);
             throw error; // Rethrow to handle it in the caller
         }
     }
@@ -26,9 +31,9 @@ class KafkaBatchMessageConsumer {
         try {
             // Disconnect the consumer
             await KafkaConsumerConfig.disconnect();
-            logger.info("Kafka Consumer disconnected successfully");
+            Logger.info("Kafka Consumer disconnected successfully");
         } catch (error) {
-            logger.error(`Error disconnecting Kafka Consumer: ${error}`);
+            Logger.error(`Error disconnecting Kafka Consumer: ${error}`);
         }
     }
 
@@ -37,7 +42,7 @@ class KafkaBatchMessageConsumer {
             // Subscribe to the topic
             await KafkaConsumerConfig.consumer.subscribe({ topic: this.message_topic, fromBeginning: true });
         } catch (error) {
-            logger.error(`❌ Error starting Kafka Message Delivery Consumer: ${error}`);
+            Logger.error(`❌ Error starting Kafka Message Delivery Consumer: ${error}`);
             throw error; // Rethrow to handle it in the caller
         }
 
@@ -51,7 +56,7 @@ class KafkaBatchMessageConsumer {
                 for (const message of batch.messages) {
                     // Check if the consumer is running and not stale
                     if (!isRunning() || isStale()) {
-                        logger.warn("⚠️ Consumer is not running or is stale, stopping batch processing.");
+                        Logger.warn("⚠️ Consumer is not running or is stale, stopping batch processing.");
                         break; // Stop processing if consumer is not running or is stale
                     }
 
@@ -102,7 +107,7 @@ class KafkaBatchMessageConsumer {
                         resolveOffset(message.offset);
                         await heartbeat();
                     } catch (error) {
-                        logger.error("Error processing message:", error);
+                        Logger.error("Error processing message:", error);
                         continue;
                     }
                 }
@@ -111,7 +116,7 @@ class KafkaBatchMessageConsumer {
                 try {
                     await commitOffsetsIfNecessary();
                 } catch (commitError) {
-                    logger.error(`❌ Error committing offsets: ${commitError}`);
+                    Logger.error(`❌ Error committing offsets: ${commitError}`);
                 }
             },
         });

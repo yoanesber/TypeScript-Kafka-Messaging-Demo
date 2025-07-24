@@ -10,6 +10,11 @@ import {
     UpdatedAt
 } from 'sequelize-typescript';
 
+/**
+ * Message model represents a message in the messaging system.
+ * It includes fields for sender, receiver, content, status, and timestamps.
+ */
+
 // Define the base attribute type
 interface MessageAttributes {
     id: string;

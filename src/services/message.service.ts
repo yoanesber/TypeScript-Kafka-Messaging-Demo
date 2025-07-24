@@ -8,6 +8,11 @@ import { kafkaProducerConfig as KafkaProducerConfig } from "../config/kafka.conf
 import { Message, MessageCreationAttributes } from "../models/message.model";
 import { MessageRequest, MessageRequestSchema } from "../dtos/message-request.dto";
 
+/**
+ * MessageService handles the business logic for message operations.
+ * It includes methods for posting a single message, posting bulk messages,
+ * retrieving all messages, and getting a message by ID.
+ */
 class MessageService {
     private message_topic: string;
 
